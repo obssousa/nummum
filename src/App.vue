@@ -1,85 +1,83 @@
 <script setup lang="ts">
- import { ref, watch } from 'vue';
- import { Plus } from 'framework7-icons/vue';
-import { kApp, kPage, kNavbar, kFab, kBlock, kButton, kSearchbar, kList, kListItem } from 'konsta/vue';
+import { ref } from "vue";
+import { EnvelopeFill, Calendar, CloudUploadFill } from "framework7-icons/vue";
+import {
+  EnvelopeIcon,
+  CalendarDaysIcon,
+  CloudIcon,
+} from "@heroicons/vue/24/solid";
+import { kApp, kPage, kNavbar, kTabbar, kIcon, kTabbarLink } from "konsta/vue";
+import Despesas from "./views/Despesas.vue";
+import Investimentos from "./views/Investimentos.vue";
+import Dicas from "./views/Dicas.vue";
 
-const items = [
-    { title: 'FC Ajax' },
-    { title: 'FC Arsenal' },
-    { title: 'FC Athletic' },
-    { title: 'FC Barcelona' },
-    { title: 'FC Bayern München' },
-    { title: 'FC Bordeaux' },
-    { title: 'FC Borussia Dortmund' },
-    { title: 'FC Chelsea' },
-    { title: 'FC Galatasaray' },
-    { title: 'FC Juventus' },
-    { title: 'FC Liverpool' },
-    { title: 'FC Manchester City' },
-    { title: 'FC Manchester United' },
-    { title: 'FC Paris Saint-Germain' },
-    { title: 'FC Real Madrid' },
-    { title: 'FC Tottenham Hotspur' },
-    { title: 'FC Valencia' },
-    { title: 'FC West Ham United' },
-  ];
-
-  const searchQuery = ref('');
-
-const handleSearch = (e: { target: { value: string; }; }) => {
-  searchQuery.value = e.target.value;
-};
-
-const handleClear = () => {
-  searchQuery.value = '';
-};
-
-const handleDisable = () => {
-  console.log('Disable');
-};
-
-const filteredItems = ref(items);
-
-watch(searchQuery, () => {
-  filteredItems.value = searchQuery.value
-    ? items.filter((item) =>
-        item.title.toLowerCase().includes(searchQuery.value.toLowerCase())
-      )
-    : items;
-});
+const activeTab = ref("tab-1");
+const isTabbarLabels = ref(true);
+const isTabbarIcons = ref(true);
 </script>
 
 <template>
   <kApp theme="material">
     <kPage>
-      <kNavbar title="My App" />
-      <k-searchbar
-          :value="searchQuery"
-          disable-button
-          disable-button-text="Cancel"
-          @clear="handleClear"
-          @disable="handleDisable"
-          @input="handleSearch"
+      <kNavbar title="Endinheirando" />
+      <kTabbar
+        :labels="isTabbarLabels"
+        :icons="isTabbarIcons"
+        class="left-0 bottom-0 fixed"
+      >
+        <k-tabbar-link
+          :active="activeTab === 'tab-1'"
+          @click="() => (activeTab = 'tab-1')"
         >
-        </k-searchbar>
-        <k-list strong inset-material outline-ios>
-      <k-list-item v-if="filteredItems.length === 0" title="Nothing found" />
-      <k-list-item
-        v-for="item in filteredItems"
-        :key="item.title"
-        :title="item.title"
-      />
-    </k-list>
-      <kBlock>
-        <k-button roundedMaterial>Button</k-button>
-        <p>Here comes my app</p>
-      </kBlock>
+          <template v-if="isTabbarLabels" #label> Tab 1 </template>
+          <template v-if="isTabbarIcons" #icon>
+            <k-icon>
+              <template #ios>
+                <EnvelopeFill class="w-7 h-7" />
+              </template>
+              <template #material>
+                <EnvelopeIcon class="w-6 h-6" />
+              </template>
+            </k-icon>
+          </template>
+        </k-tabbar-link>
+        <k-tabbar-link
+          :active="activeTab === 'tab-2'"
+          @click="() => (activeTab = 'tab-2')"
+        >
+          <template v-if="isTabbarLabels" #label> Tab 2 </template>
+          <template v-if="isTabbarIcons" #icon>
+            <k-icon>
+              <template #ios>
+                <Calendar class="w-7 h-7" />
+              </template>
+              <template #material>
+                <CalendarDaysIcon class="w-6 h-6" />
+              </template>
+            </k-icon>
+          </template>
+        </k-tabbar-link>
+        <k-tabbar-link
+          :active="activeTab === 'tab-3'"
+          @click="() => (activeTab = 'tab-3')"
+        >
+          <template v-if="isTabbarLabels" #label> Tab 3 </template>
+          <template v-if="isTabbarIcons" #icon>
+            <k-icon>
+              <template #ios>
+                <CloudUploadFill class="w-7 h-7" />
+              </template>
+              <template #material>
+                <CloudIcon class="w-6 h-6" />
+              </template>
+            </k-icon>
+          </template>
+        </k-tabbar-link>
+      </kTabbar>
 
-      <k-fab class="fixed right-4-safe bottom-4-safe z-20">
-      <template #icon>
-        <component :is="Plus" />
-      </template>
-    </k-fab>
+      <Despesas v-if="activeTab === 'tab-1'" />
+      <Investimentos v-if="activeTab === 'tab-2'" />
+      <Dicas v-if="activeTab === 'tab-3'" />
     </kPage>
   </kApp>
 </template>
