@@ -1,0 +1,7 @@
+{
+  "name": "Endinheirado",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue-vite"
+}
