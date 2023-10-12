@@ -2,62 +2,14 @@
 import { reactive } from "vue";
 import { IonIcon } from "@ionic/vue";
 import { card, wallet, download } from "ionicons/icons";
+import { TradingType } from "@/types/enum";
+import { useTradings } from "@/store/useTradings";
 
 defineProps({
   name: String,
 });
 
-enum TradingType {
-  Withdraw,
-  Deposit,
-  Investiment,
-}
-
-const tradings = reactive([
-  {
-    value: 200,
-    title: "Galaxy S21",
-    type: TradingType.Withdraw,
-  },
-  {
-    value: 100,
-    title: "Ingresso",
-    installment: 3,
-    endDate: "22/12/2024",
-    type: TradingType.Withdraw,
-  },
-  {
-    value: 300,
-    title: "Freela",
-    installment: false,
-    type: TradingType.Deposit,
-  },
-  {
-    value: 300,
-    title: "Oléo Automotivo",
-    installment: 6,
-    endDate: "22/12/2024",
-    type: TradingType.Withdraw,
-  },
-  {
-    value: 300,
-    title: "Pendrive",
-    installment: false,
-    type: TradingType.Withdraw,
-  },
-  {
-    value: 700,
-    title: "MXRF11",
-    installment: false,
-    type: TradingType.Investiment,
-  },
-  {
-    value: 1200,
-    title: "TAEE11",
-    installment: false,
-    type: TradingType.Investiment,
-  },
-]);
+const { getTradings } = useTradings();
 
 function getDisplayType(type: TradingType) {
   switch (type) {
@@ -101,7 +53,7 @@ function getTypeIcon(type: TradingType) {
             'bg-ion-color-danger text-ion-color-danger-contrast':
               item.type === TradingType.Withdraw,
           }"
-          v-for="item in tradings"
+          v-for="item in getTradings"
           :key="item.title"
         >
           <p class="flex items-center gap-1 font-black text-lg">

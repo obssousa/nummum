@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { IonHeader, IonToolbar } from "@ionic/vue";
-import { IonButtons, IonMenuButton } from "@ionic/vue";
+import { IonButtons, IonMenuButton, IonIcon } from "@ionic/vue";
 </script>
 <template>
   <ion-header class="ion-no-border">
