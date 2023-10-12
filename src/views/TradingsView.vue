@@ -26,7 +26,6 @@
 
 <script setup lang="ts">
 import { IonPage, IonContent } from "@ionic/vue";
-import LastTradingsSection from "@/components/LastTradingsSection.vue";
 
 import { IonFab, IonFabButton, IonFabList, IonIcon } from "@ionic/vue";
 import { add, colorPalette, document, globe } from "ionicons/icons";
